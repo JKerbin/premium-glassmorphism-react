@@ -1,6 +1,6 @@
 # React Premium Glass
 
-一个高质量的 React 玻璃态效果组件库，提供现代化的毛玻璃（Glassmorphism）UI 组件。
+一个高质量的 React 玻璃态效果 GlassCard 组件，提供现代化的毛玻璃（Glassmorphism）UI 效果。
 
 ## 特性
 
@@ -24,7 +24,7 @@ pnpm add react-premium-glass
 ## 快速开始
 
 ```tsx
-import { GlassCard, GlassButton } from 'react-premium-glass';
+import { GlassCard } from 'react-premium-glass';
 
 function App() {
   return (
@@ -36,9 +36,6 @@ function App() {
       <GlassCard variant="light" blur={10} opacity={0.1}>
         <h2>欢迎使用 React Premium Glass</h2>
         <p>这是一个美丽的玻璃态卡片组件</p>
-        <GlassButton variant="colored" onClick={() => alert('点击了按钮!')}>
-          点击我
-        </GlassButton>
       </GlassCard>
     </div>
   );
@@ -49,7 +46,7 @@ function App() {
 
 ### GlassCard
 
-基础的玻璃态卡片组件。
+基础的玻璃态卡片组件，支持多种变体和自定义选项。
 
 ```tsx
 <GlassCard 
@@ -64,50 +61,9 @@ function App() {
 </GlassCard>
 ```
 
-### GlassButton
-
-玻璃态按钮组件。
-
-```tsx
-<GlassButton 
-  variant="colored"
-  size="medium"
-  onClick={() => console.log('clicked')}
->
-  按钮文本
-</GlassButton>
-```
-
-### GlassInput
-
-玻璃态输入框组件。
-
-```tsx
-<GlassInput 
-  placeholder="请输入内容"
-  value={value}
-  onChange={setValue}
-  variant="light"
-/>
-```
-
-### GlassModal
-
-玻璃态模态框组件。
-
-```tsx
-<GlassModal 
-  isOpen={isOpen}
-  onClose={() => setIsOpen(false)}
-  title="模态框标题"
->
-  <p>模态框内容</p>
-</GlassModal>
-```
-
 ## API 参考
 
-### 通用属性 (GlassProps)
+### GlassCard 属性
 
 | 属性 | 类型 | 默认值 | 描述 |
 |------|------|--------|------|
@@ -120,6 +76,7 @@ function App() {
 | background | `string` | - | 自定义背景色 |
 | className | `string` | - | 自定义 CSS 类名 |
 | style | `CSSProperties` | - | 自定义样式 |
+| children | `ReactNode` | - | 子元素内容 |
 
 ## 开发
 
@@ -159,6 +116,6 @@ MIT License
 
 ### 1.0.0
 - 初始版本发布
-- 包含 GlassCard、GlassButton、GlassInput、GlassModal 组件
+- 包含 GlassCard 组件
 - 完整的 TypeScript 支持
 - Storybook 文档
