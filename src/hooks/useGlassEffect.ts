@@ -1,6 +1,6 @@
-import { useMemo } from 'react';
-import { createGlassStyle } from '../utils/glassUtils';
-import { GlassVariant } from '../types/glass.types';
+import { useMemo } from "react";
+import { createGlassStyle } from "../utils/glassUtils";
+import { GlassVariant } from "../types/glass.types";
 
 export interface UseGlassEffectOptions {
   variant?: GlassVariant;
@@ -14,7 +14,7 @@ export interface UseGlassEffectOptions {
 
 export const useGlassEffect = (options: UseGlassEffectOptions = {}) => {
   const {
-    variant = 'light',
+    variant = "light",
     blur = 10,
     opacity = 0.1,
     borderRadius = 12,
@@ -24,7 +24,16 @@ export const useGlassEffect = (options: UseGlassEffectOptions = {}) => {
   } = options;
 
   const glassStyle = useMemo(
-    () => createGlassStyle(variant, blur, opacity, borderRadius, border, shadow, background),
+    () =>
+      createGlassStyle(
+        variant,
+        blur,
+        opacity,
+        borderRadius,
+        border,
+        shadow,
+        background
+      ),
     [variant, blur, opacity, borderRadius, border, shadow, background]
   );
 

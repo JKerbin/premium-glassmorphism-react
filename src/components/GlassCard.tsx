@@ -1,12 +1,12 @@
-import React from 'react';
-import { GlassProps } from '../types/glass.types';
-import { useGlassEffect } from '../hooks/useGlassEffect';
+import React from "react";
+import { GlassProps } from "../types/glass.types";
+import { useGlassEffect } from "../hooks/useGlassEffect";
 
 const GlassCard: React.FC<GlassProps> = ({
   children,
-  className = '',
+  className = "",
   style = {},
-  variant = 'light',
+  variant = "light",
   blur = 10,
   opacity = 0.1,
   borderRadius = 12,
@@ -31,11 +31,7 @@ const GlassCard: React.FC<GlassProps> = ({
   };
 
   return (
-    <div
-      className={`glass-card ${className}`}
-      style={combinedStyle}
-      {...props}
-    >
+    <div className={`glass-card ${className}`} style={combinedStyle} {...props}>
       {children}
     </div>
   );

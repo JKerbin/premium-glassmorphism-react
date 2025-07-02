@@ -1,8 +1,8 @@
-import type { Preview } from '@storybook/react';
+import type { Preview } from "@storybook/react";
 
 const preview: Preview = {
   parameters: {
-    actions: { argTypesRegex: '^on[A-Z].*' },
+    actions: { argTypesRegex: "^on[A-Z].*" },
     controls: {
       matchers: {
         color: /(background|color)$/i,
@@ -10,19 +10,19 @@ const preview: Preview = {
       },
     },
     backgrounds: {
-      default: 'gradient',
+      default: "gradient",
       values: [
         {
-          name: 'gradient',
-          value: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+          name: "gradient",
+          value: "radial-gradient(circle at 60% 60%, white 0%, #eee 30%, #aaa 100%)",
         },
         {
-          name: 'dark',
-          value: '#1a1a1a',
+          name: "dark",
+          value: "#1a1a1a",
         },
         {
-          name: 'light',
-          value: '#f0f0f0',
+          name: "light",
+          value: "#f0f0f0",
         },
       ],
     },

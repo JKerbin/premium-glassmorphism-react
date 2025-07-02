@@ -24,15 +24,17 @@ pnpm add react-premium-glass
 ## 快速开始
 
 ```tsx
-import { GlassCard } from 'react-premium-glass';
+import { GlassCard } from "react-premium-glass";
 
 function App() {
   return (
-    <div style={{ 
-      background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-      minHeight: '100vh',
-      padding: '20px'
-    }}>
+    <div
+      style={{
+        background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+        minHeight: "100vh",
+        padding: "20px",
+      }}
+    >
       <GlassCard variant="light" blur={10} opacity={0.1}>
         <h2>欢迎使用 React Premium Glass</h2>
         <p>这是一个美丽的玻璃态卡片组件</p>
@@ -49,9 +51,9 @@ function App() {
 基础的玻璃态卡片组件，支持多种变体和自定义选项。
 
 ```tsx
-<GlassCard 
-  variant="light" 
-  blur={10} 
+<GlassCard
+  variant="light"
+  blur={10}
   opacity={0.1}
   borderRadius={12}
   border={true}
@@ -65,18 +67,18 @@ function App() {
 
 ### GlassCard 属性
 
-| 属性 | 类型 | 默认值 | 描述 |
-|------|------|--------|------|
-| variant | `'light' \| 'dark' \| 'colored' \| 'gradient'` | `'light'` | 玻璃效果变体 |
-| blur | `number` | `10` | 模糊程度 (px) |
-| opacity | `number` | `0.1` | 背景透明度 |
-| borderRadius | `number` | `12` | 圆角大小 (px) |
-| border | `boolean` | `true` | 是否显示边框 |
-| shadow | `boolean` | `true` | 是否显示阴影 |
-| background | `string` | - | 自定义背景色 |
-| className | `string` | - | 自定义 CSS 类名 |
-| style | `CSSProperties` | - | 自定义样式 |
-| children | `ReactNode` | - | 子元素内容 |
+| 属性         | 类型                                           | 默认值    | 描述            |
+| ------------ | ---------------------------------------------- | --------- | --------------- |
+| variant      | `'light' \| 'dark' \| 'colored' \| 'gradient'` | `'light'` | 玻璃效果变体    |
+| blur         | `number`                                       | `10`      | 模糊程度 (px)   |
+| opacity      | `number`                                       | `0.1`     | 背景透明度      |
+| borderRadius | `number`                                       | `12`      | 圆角大小 (px)   |
+| border       | `boolean`                                      | `true`    | 是否显示边框    |
+| shadow       | `boolean`                                      | `true`    | 是否显示阴影    |
+| background   | `string`                                       | -         | 自定义背景色    |
+| className    | `string`                                       | -         | 自定义 CSS 类名 |
+| style        | `CSSProperties`                                | -         | 自定义样式      |
+| children     | `ReactNode`                                    | -         | 子元素内容      |
 
 ## 开发
 
@@ -115,6 +117,7 @@ MIT License
 ## 更新日志
 
 ### 1.0.0
+
 - 初始版本发布
 - 包含 GlassCard 组件
 - 完整的 TypeScript 支持

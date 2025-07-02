@@ -1,6 +1,6 @@
-import { CSSProperties, ReactNode } from 'react';
+import { CSSProperties, ReactNode } from "react";
 
-export type GlassVariant = 'light' | 'dark' | 'colored' | 'gradient';
+export type GlassVariant = "light" | "dark" | "colored" | "gradient";
 
 export interface GlassProps {
   children?: ReactNode;
@@ -18,15 +18,15 @@ export interface GlassProps {
 export interface GlassButtonProps extends GlassProps {
   onClick?: () => void;
   disabled?: boolean;
-  size?: 'small' | 'medium' | 'large';
-  type?: 'button' | 'submit' | 'reset';
+  size?: "small" | "medium" | "large";
+  type?: "button" | "submit" | "reset";
 }
 
 export interface GlassInputProps extends GlassProps {
   placeholder?: string;
   value?: string;
   onChange?: (value: string) => void;
-  type?: 'text' | 'password' | 'email' | 'number';
+  type?: "text" | "password" | "email" | "number";
   disabled?: boolean;
 }
 
