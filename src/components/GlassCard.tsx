@@ -7,10 +7,10 @@ const GlassCard: React.FC<GlassProps> = ({
   children,
   className = "",
   style = {},
-  blur = 10,
+  blur = 0,
   borderRadius = 12,
   border = true,
-  shadow = true,
+  shadow = false,
   // WebGL 参数
   ior = 1.1,
   glassThickness = 41,
