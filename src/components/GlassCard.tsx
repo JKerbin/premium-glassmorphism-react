@@ -25,7 +25,11 @@ const GlassCard: React.FC<GlassProps> = ({
   };
 
   return (
-    <div className={`${glassClasses} ${className}`} style={combinedStyle} {...props}>
+    <div
+      className={`${glassClasses} ${className}`}
+      style={combinedStyle}
+      {...props}
+    >
       {children}
     </div>
   );

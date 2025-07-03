@@ -1,5 +1,5 @@
 /**
- * 获取玻璃态效果的CSS类名
+ * Get CSS class names for glass effect
  */
 export const getGlassClasses = (
   blur: number = 10,
@@ -7,35 +7,35 @@ export const getGlassClasses = (
   border: boolean = true,
   shadow: boolean = true
 ): string => {
-  const classes = ['glass-card'];
-  
-  // 添加边框类
+  const classes = ["glass-card"];
+
+  // Add border class
   if (border) {
-    classes.push('glass-border');
+    classes.push("glass-border");
   }
-  
-  // 添加阴影类
+
+  // Add shadow class
   if (shadow) {
-    classes.push('glass-shadow');
+    classes.push("glass-shadow");
   }
-  
-  // 根据模糊值添加对应类
-  if (blur === 5) classes.push('glass-blur-5');
-  else if (blur === 15) classes.push('glass-blur-15');
-  else if (blur === 20) classes.push('glass-blur-20');
-  else classes.push('glass-blur-10'); // 默认
-  
-  // 根据圆角值添加对应类
-  if (borderRadius <= 6) classes.push('glass-rounded-sm');
-  else if (borderRadius <= 18) classes.push('glass-rounded-lg');
-  else if (borderRadius <= 24) classes.push('glass-rounded-xl');
-  else classes.push('glass-rounded-md'); // 默认
-  
-  return classes.join(' ');
+
+  // Add blur class based on blur value
+  if (blur === 5) classes.push("glass-blur-5");
+  else if (blur === 15) classes.push("glass-blur-15");
+  else if (blur === 20) classes.push("glass-blur-20");
+  else classes.push("glass-blur-10"); // default
+
+  // Add border radius class based on borderRadius value
+  if (borderRadius <= 6) classes.push("glass-rounded-sm");
+  else if (borderRadius <= 18) classes.push("glass-rounded-lg");
+  else if (borderRadius <= 24) classes.push("glass-rounded-xl");
+  else classes.push("glass-rounded-md"); // default
+
+  return classes.join(" ");
 };
 
 /**
- * 获取玻璃态的默认样式配置
+ * Get default glass style configuration
  */
 export const getGlassVariants = () => ({
   background: "rgba(255, 255, 255, 0)",
@@ -43,23 +43,23 @@ export const getGlassVariants = () => ({
 });
 
 /**
- * 创建自定义CSS变量样式对象
+ * Create custom CSS variables style object
  */
 export const createGlassStyle = (
   blur?: number,
   borderRadius?: number
 ): Record<string, string> => {
   const style: Record<string, string> = {};
-  
-  // 设置自定义模糊值（如果不是标准值）
+
+  // Set custom blur if not standard values
   if (blur && ![5, 10, 15, 20].includes(blur)) {
-    style['--glass-blur'] = `${blur}px`;
+    style["--glass-blur"] = `${blur}px`;
   }
-  
-  // 设置自定义圆角值（如果不是标准值）
+
+  // Set custom border radius if not standard values
   if (borderRadius && ![6, 12, 18, 24].includes(borderRadius)) {
-    style['--glass-border-radius'] = `${borderRadius}px`;
+    style["--glass-border-radius"] = `${borderRadius}px`;
   }
-  
+
   return style;
 };

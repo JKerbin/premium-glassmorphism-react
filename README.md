@@ -15,10 +15,6 @@
 
 ```bash
 npm install react-premium-glass
-# 或
-yarn add react-premium-glass
-# 或
-pnpm add react-premium-glass
 ```
 
 ## 快速开始

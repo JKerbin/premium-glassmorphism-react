@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { useState, useEffect } from "react";
 import GlassCard from "../components/GlassCard";
 
-// 固定的诗歌内容
+// Fixed poetry content
 const poetryText = `In shadows deep where silence dwells
 The moonlight dances on the hills
 Through whispered winds and ancient trees
@@ -93,21 +93,21 @@ Magic floats upon the air
 Hope springs forth from winter's end
 New beginnings round each bend`;
 
-// 全局变量存储随机图片ID，避免重复加载
+// Global variable to store random image ID, avoiding repeated loading
 let globalRandomImageId: number | null = null;
 
-// 背景装饰器
+// Background decorator
 const BackgroundDecorator = (Story: any) => {
   const [imageLoaded, setImageLoaded] = useState(false);
-  
-  // 只在第一次加载时生成随机ID
+
+  // Generate random ID only on first load
   if (globalRandomImageId === null) {
     globalRandomImageId = Math.floor(Math.random() * 1000);
   }
-  
+
   const imageUrl = `https://picsum.photos/seed/${globalRandomImageId}/1600/900`;
-  
-  // 预加载图片
+
+  // Preload image
   useEffect(() => {
     const img = new Image();
     img.onload = () => {
@@ -122,10 +122,10 @@ const BackgroundDecorator = (Story: any) => {
         position: "relative",
         width: "100%",
         height: "100vh",
-        overflow: "hidden", // 隐藏容器的滚动条
+        overflow: "hidden", // Hide container scrollbars
       }}
     >
-      {/* 背景图片层 */}
+      {/* Background image layer */}
       <div
         style={{
           position: "absolute",
@@ -141,8 +141,8 @@ const BackgroundDecorator = (Story: any) => {
           transition: "opacity 1s ease-in-out",
         }}
       />
-      
-      {/* 可滚动的诗歌内容 */}
+
+      {/* Scrollable poetry content */}
       <div
         style={{
           position: "absolute",
@@ -157,8 +157,8 @@ const BackgroundDecorator = (Story: any) => {
           textShadow: "0 2px 4px rgba(0,0,0,0.7)",
           fontFamily: "Georgia, serif",
           textAlign: "center",
-          whiteSpace: "pre-line", // 保持换行格式
-          overflow: "auto", // 只有内容区域可以滚动
+          whiteSpace: "pre-line", // Preserve line break formatting
+          overflow: "auto", // Only content area can scroll
         }}
       >
         <div
@@ -171,7 +171,7 @@ const BackgroundDecorator = (Story: any) => {
         </div>
       </div>
 
-      {/* 固定位置的 GlassCard */}
+      {/* Fixed position GlassCard */}
       <div
         style={{
           position: "fixed",
@@ -191,9 +191,9 @@ const meta: Meta<typeof GlassCard> = {
   title: "Components/GlassCard",
   component: GlassCard,
   parameters: {
-    layout: "fullscreen", // 改为全屏布局
+    layout: "fullscreen", // Change to fullscreen layout
   },
-  decorators: [BackgroundDecorator], // 添加背景装饰器
+  decorators: [BackgroundDecorator], // Add background decorator
   tags: ["autodocs"],
   argTypes: {
     blur: {

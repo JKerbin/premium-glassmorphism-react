@@ -15,7 +15,8 @@ const preview: Preview = {
       values: [
         {
           name: "gradient",
-          value: "radial-gradient(circle at 60% 60%, white 0%, #eee 30%, #aaa 100%)",
+          value:
+            "radial-gradient(circle at 60% 60%, white 0%, #eee 30%, #aaa 100%)",
         },
         {
           name: "dark",

@@ -33,7 +33,7 @@ export default [
       postcss({
         extract: true,
         minimize: true,
-        use: ['sass'],
+        use: ["sass"],
       }),
       typescript({
         tsconfig: "./tsconfig.json",
