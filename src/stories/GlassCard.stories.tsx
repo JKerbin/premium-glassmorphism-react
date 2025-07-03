@@ -238,9 +238,7 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {
     children: (
-      <div style={{ padding: "20px" }}>
-        <h3>Glass Card</h3>
-        <p>This is a beautiful glassmorphism card component.</p>
+      <div style={{ padding: "70px 200px" }}>
       </div>
     ),
   },

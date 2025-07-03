@@ -250,12 +250,37 @@ const GlassCard: React.FC<GlassProps> = ({
 
     try {
       const rect = containerRef.current.getBoundingClientRect();
+      
+      // 计算页面绝对坐标（包含滚动偏移）
+      const scrollX = window.pageXOffset || document.documentElement.scrollLeft;
+      const scrollY = window.pageYOffset || document.documentElement.scrollTop;
+      const absoluteLeft = rect.left + scrollX;
+      const absoluteTop = rect.top + scrollY;
+      
+      // 获取完整页面的尺寸
+      const fullWidth = Math.max(
+        document.body.scrollWidth,
+        document.body.offsetWidth,
+        document.documentElement.clientWidth,
+        document.documentElement.scrollWidth,
+        document.documentElement.offsetWidth
+      );
+      const fullHeight = Math.max(
+        document.body.scrollHeight,
+        document.body.offsetHeight,
+        document.documentElement.clientHeight,
+        document.documentElement.scrollHeight,
+        document.documentElement.offsetHeight
+      );
+
       const fullPageCanvas = await html2canvas(document.body, {
         useCORS: true,
         allowTaint: true,
         scale: 1,
-        width: window.innerWidth,
-        height: window.innerHeight,
+        width: fullWidth,
+        height: fullHeight,
+        scrollX: 0,
+        scrollY: 0,
       });
 
       const screenshotCanvas = screenshotCanvasRef.current;
@@ -265,10 +290,11 @@ const GlassCard: React.FC<GlassProps> = ({
       const ctx = screenshotCanvas.getContext("2d");
       if (!ctx) return;
 
+      // 使用绝对坐标进行截图
       ctx.drawImage(
         fullPageCanvas,
-        rect.left,
-        rect.top,
+        absoluteLeft,
+        absoluteTop,
         rect.width,
         rect.height,
         0,
