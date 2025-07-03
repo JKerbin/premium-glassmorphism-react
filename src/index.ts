@@ -5,7 +5,10 @@ export { default as GlassCard } from "./components/GlassCard";
 export { useGlassEffect } from "./hooks/useGlassEffect";
 
 // Utils
-export { createGlassStyle } from "./utils/glassUtils";
+export { createGlassStyle, getGlassClasses, getGlassVariants } from "./utils/glassUtils";
 
 // Types
-export type { GlassProps, GlassVariant } from "./types/glass.types";
+export type { GlassProps } from "./types/glass.types";
+
+// Styles
+import "./styles/glass.scss";

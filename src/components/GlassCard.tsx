@@ -6,23 +6,17 @@ const GlassCard: React.FC<GlassProps> = ({
   children,
   className = "",
   style = {},
-  variant = "light",
   blur = 10,
-  opacity = 0.1,
   borderRadius = 12,
   border = true,
   shadow = true,
-  background,
   ...props
 }) => {
-  const { glassStyle } = useGlassEffect({
-    variant,
+  const { glassClasses, glassStyle } = useGlassEffect({
     blur,
-    opacity,
     borderRadius,
     border,
     shadow,
-    background,
   });
 
   const combinedStyle = {
@@ -31,7 +25,7 @@ const GlassCard: React.FC<GlassProps> = ({
   };
 
   return (
-    <div className={`glass-card ${className}`} style={combinedStyle} {...props}>
+    <div className={`${glassClasses} ${className}`} style={combinedStyle} {...props}>
       {children}
     </div>
   );

@@ -196,15 +196,8 @@ const meta: Meta<typeof GlassCard> = {
   decorators: [BackgroundDecorator], // 添加背景装饰器
   tags: ["autodocs"],
   argTypes: {
-    variant: {
-      control: { type: "select" },
-      options: ["light", "dark", "colored", "gradient"],
-    },
     blur: {
       control: { type: "range", min: 0, max: 50, step: 1 },
-    },
-    opacity: {
-      control: { type: "range", min: 0, max: 1, step: 0.1 },
     },
     borderRadius: {
       control: { type: "range", min: 0, max: 50, step: 1 },
@@ -217,7 +210,6 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    variant: "light",
     children: (
       <div style={{ padding: "20px" }}>
         <h3>Glass Card</h3>

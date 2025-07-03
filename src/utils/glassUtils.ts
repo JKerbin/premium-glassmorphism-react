@@ -1,72 +1,65 @@
-import { CSSProperties } from "react";
-import { GlassVariant } from "../types/glass.types";
-
-export const createGlassStyle = (
-  variant: GlassVariant = "light",
+/**
+ * 获取玻璃态效果的CSS类名
+ */
+export const getGlassClasses = (
   blur: number = 10,
-  opacity: number = 0.1,
   borderRadius: number = 12,
   border: boolean = true,
-  shadow: boolean = true,
-  background?: string
-): CSSProperties => {
-  const baseStyle: CSSProperties = {
-    backdropFilter: `blur(${blur}px)`,
-    WebkitBackdropFilter: `blur(${blur}px)`,
-    borderRadius: `${borderRadius}px`,
-    position: "relative",
-    overflow: "hidden",
-  };
-
-  // 根据变体设置背景
-  switch (variant) {
-    case "light":
-      baseStyle.background = background || `rgba(255, 255, 255, ${opacity})`;
-      break;
-    case "dark":
-      baseStyle.background = background || `rgba(0, 0, 0, ${opacity})`;
-      break;
-    case "colored":
-      baseStyle.background = background || `rgba(59, 130, 246, ${opacity})`;
-      break;
-    case "gradient":
-      baseStyle.background =
-        background ||
-        `linear-gradient(135deg, rgba(255, 255, 255, ${opacity}) 0%, rgba(59, 130, 246, ${
-          opacity * 0.8
-        }) 100%)`;
-      break;
-  }
-
-  // 添加边框
+  shadow: boolean = true
+): string => {
+  const classes = ['glass-card'];
+  
+  // 添加边框类
   if (border) {
-    baseStyle.border = "1px solid rgba(255, 255, 255, 0.2)";
+    classes.push('glass-border');
   }
-
-  // 添加阴影
+  
+  // 添加阴影类
   if (shadow) {
-    baseStyle.boxShadow = "0 8px 32px 0 rgba(31, 38, 135, 0.37)";
+    classes.push('glass-shadow');
   }
-
-  return baseStyle;
+  
+  // 根据模糊值添加对应类
+  if (blur === 5) classes.push('glass-blur-5');
+  else if (blur === 15) classes.push('glass-blur-15');
+  else if (blur === 20) classes.push('glass-blur-20');
+  else classes.push('glass-blur-10'); // 默认
+  
+  // 根据圆角值添加对应类
+  if (borderRadius <= 6) classes.push('glass-rounded-sm');
+  else if (borderRadius <= 18) classes.push('glass-rounded-lg');
+  else if (borderRadius <= 24) classes.push('glass-rounded-xl');
+  else classes.push('glass-rounded-md'); // 默认
+  
+  return classes.join(' ');
 };
 
+/**
+ * 获取玻璃态的默认样式配置
+ */
 export const getGlassVariants = () => ({
-  light: {
-    background: "rgba(255, 255, 255, 0.1)",
-    border: "1px solid rgba(255, 255, 255, 0.2)",
-  },
-  dark: {
-    background: "rgba(0, 0, 0, 0.1)",
-    border: "1px solid rgba(255, 255, 255, 0.1)",
-  },
-  colored: {
-    background: "rgba(59, 130, 246, 0.1)",
-    border: "1px solid rgba(59, 130, 246, 0.2)",
-  },
-  gradient: {
-    background:
-      "linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(59, 130, 246, 0.08) 100%)",
-    border: "1px solid rgba(255, 255, 255, 0.2)",
-  },
+  background: "rgba(255, 255, 255, 0)",
+  borderColor: "rgba(255, 255, 255, 0.2)",
 });
+
+/**
+ * 创建自定义CSS变量样式对象
+ */
+export const createGlassStyle = (
+  blur?: number,
+  borderRadius?: number
+): Record<string, string> => {
+  const style: Record<string, string> = {};
+  
+  // 设置自定义模糊值（如果不是标准值）
+  if (blur && ![5, 10, 15, 20].includes(blur)) {
+    style['--glass-blur'] = `${blur}px`;
+  }
+  
+  // 设置自定义圆角值（如果不是标准值）
+  if (borderRadius && ![6, 12, 18, 24].includes(borderRadius)) {
+    style['--glass-border-radius'] = `${borderRadius}px`;
+  }
+  
+  return style;
+};

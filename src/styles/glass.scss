@@ -1,0 +1,54 @@
+// Glass effect base styles
+.glass-card {
+  backdrop-filter: blur(var(--glass-blur, 10px));
+  -webkit-backdrop-filter: blur(var(--glass-blur, 10px));
+  border-radius: var(--glass-border-radius, 12px);
+  position: relative;
+  overflow: hidden;
+  --glass-background: rgba(255, 255, 255, 0);
+  background: var(--glass-background);
+
+  // Border styles
+  &.glass-border {
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  // Shadow styles
+  &.glass-shadow {
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  }
+}
+
+// Utility classes for different blur levels
+.glass-blur-5 {
+  --glass-blur: 5px;
+}
+
+.glass-blur-10 {
+  --glass-blur: 10px;
+}
+
+.glass-blur-15 {
+  --glass-blur: 15px;
+}
+
+.glass-blur-20 {
+  --glass-blur: 20px;
+}
+
+// Utility classes for different border radius
+.glass-rounded-sm {
+  --glass-border-radius: 6px;
+}
+
+.glass-rounded-md {
+  --glass-border-radius: 12px;
+}
+
+.glass-rounded-lg {
+  --glass-border-radius: 18px;
+}
+
+.glass-rounded-xl {
+  --glass-border-radius: 24px;
+}

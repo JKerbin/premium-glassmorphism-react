@@ -35,7 +35,7 @@ function App() {
         padding: "20px",
       }}
     >
-      <GlassCard variant="light" blur={10} opacity={0.1}>
+      <GlassCard blur={10}>
         <h2>欢迎使用 React Premium Glass</h2>
         <p>这是一个美丽的玻璃态卡片组件</p>
       </GlassCard>
@@ -52,9 +52,7 @@ function App() {
 
 ```tsx
 <GlassCard
-  variant="light"
   blur={10}
-  opacity={0.1}
   borderRadius={12}
   border={true}
   shadow={true}
@@ -67,17 +65,14 @@ function App() {
 
 ### GlassCard 属性
 
-| 属性         | 类型                                           | 默认值    | 描述            |
-| ------------ | ---------------------------------------------- | --------- | --------------- |
-| variant      | `'light' \| 'dark' \| 'colored' \| 'gradient'` | `'light'` | 玻璃效果变体    |
-| blur         | `number`                                       | `10`      | 模糊程度 (px)   |
-| opacity      | `number`                                       | `0.1`     | 背景透明度      |
-| borderRadius | `number`                                       | `12`      | 圆角大小 (px)   |
-| border       | `boolean`                                      | `true`    | 是否显示边框    |
-| shadow       | `boolean`                                      | `true`    | 是否显示阴影    |
-| background   | `string`                                       | -         | 自定义背景色    |
-| className    | `string`                                       | -         | 自定义 CSS 类名 |
-| style        | `CSSProperties`                                | -         | 自定义样式      |
+| 属性         | 类型            | 默认值 | 描述            |
+| ------------ | --------------- | ------ | --------------- |
+| blur         | `number`        | `10`   | 模糊程度 (px)   |
+| borderRadius | `number`        | `12`   | 圆角大小 (px)   |
+| border       | `boolean`       | `true` | 是否显示边框    |
+| shadow       | `boolean`       | `true` | 是否显示阴影    |
+| className    | `string`        | -      | 自定义 CSS 类名 |
+| style        | `CSSProperties` | -      | 自定义样式      |
 | children     | `ReactNode`                                    | -         | 子元素内容      |
 
 ## 开发

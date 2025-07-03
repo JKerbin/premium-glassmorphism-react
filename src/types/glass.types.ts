@@ -1,18 +1,13 @@
 import { CSSProperties, ReactNode } from "react";
 
-export type GlassVariant = "light" | "dark" | "colored" | "gradient";
-
 export interface GlassProps {
   children?: ReactNode;
   className?: string;
   style?: CSSProperties;
-  variant?: GlassVariant;
   blur?: number;
-  opacity?: number;
   borderRadius?: number;
   border?: boolean;
   shadow?: boolean;
-  background?: string;
 }
 
 export interface GlassButtonProps extends GlassProps {
