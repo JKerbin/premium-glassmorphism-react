@@ -31,6 +31,7 @@ const GlassCard: React.FC<GlassProps> = ({
   const programRef = useRef<WebGLProgram | null>(null);
   const backgroundTextureRef = useRef<WebGLTexture | null>(null);
   const animationFrameRef = useRef<number>();
+  const [webglWorking, setWebglWorking] = React.useState(true);
 
   const { glassClasses, glassStyle } = useGlassEffect({
     blur,
@@ -200,7 +201,7 @@ const GlassCard: React.FC<GlassProps> = ({
         blurredColor /= 9.0;
 
         float height_val = getHeightFromSDF(current_p_pixel, glass_half_size_pixel, actualCornerRadius, u_sminSmoothing, u_heightTransitionWidth);
-        vec4 finalColor = mix(blurredColor, u_overlayColor, height_val * 0.15);
+        vec4 finalColor = mix(blurredColor, u_overlayColor, height_val * 0.05);
         
         float highlight_dist = abs(dist_for_shape_boundary);
         float highlight_alpha = 1.0 - smoothstep(0.0, u_highlightWidth, highlight_dist);
@@ -250,6 +251,7 @@ const GlassCard: React.FC<GlassProps> = ({
 
     try {
       const rect = containerRef.current.getBoundingClientRect();
+      const devicePixelRatio = window.devicePixelRatio || 1;
       
       // 计算页面绝对坐标（包含滚动偏移）
       const scrollX = window.pageXOffset || document.documentElement.scrollLeft;
@@ -273,51 +275,85 @@ const GlassCard: React.FC<GlassProps> = ({
         document.documentElement.offsetHeight
       );
 
+      // 提高截图质量，使用适中的缩放比例
       const fullPageCanvas = await html2canvas(document.body, {
         useCORS: true,
         allowTaint: true,
-        scale: 1,
+        scale: devicePixelRatio, // 使用设备像素比
         width: fullWidth,
         height: fullHeight,
         scrollX: 0,
         scrollY: 0,
+        backgroundColor: null, // 保持透明背景
+        removeContainer: true,
+        imageTimeout: 0,
+        logging: false,
       });
 
       const screenshotCanvas = screenshotCanvasRef.current;
-      screenshotCanvas.width = rect.width;
-      screenshotCanvas.height = rect.height;
+      // 使用设备像素比设置Canvas尺寸
+      const canvasWidth = rect.width * devicePixelRatio;
+      const canvasHeight = rect.height * devicePixelRatio;
+      
+      screenshotCanvas.width = canvasWidth;
+      screenshotCanvas.height = canvasHeight;
 
       const ctx = screenshotCanvas.getContext("2d");
       if (!ctx) return;
 
-      // 使用绝对坐标进行截图
+      // 启用图像平滑以减少锯齿
+      ctx.imageSmoothingEnabled = true;
+      ctx.imageSmoothingQuality = 'high';
+
+      // 计算源区域的缩放
+      const sourceScale = devicePixelRatio;
+      const sourceLeft = absoluteLeft * sourceScale;
+      const sourceTop = absoluteTop * sourceScale;
+      const sourceWidth = rect.width * sourceScale;
+      const sourceHeight = rect.height * sourceScale;
+
+      // 使用绝对坐标进行截图，考虑缩放
       ctx.drawImage(
         fullPageCanvas,
-        absoluteLeft,
-        absoluteTop,
-        rect.width,
-        rect.height,
+        sourceLeft,
+        sourceTop,
+        sourceWidth,
+        sourceHeight,
         0,
         0,
-        rect.width,
-        rect.height
+        canvasWidth,
+        canvasHeight
       );
 
       const gl = glRef.current;
       gl.bindTexture(gl.TEXTURE_2D, backgroundTextureRef.current);
       gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
+      
+      // 检查WebGL错误
+      let error = gl.getError();
+      if (error !== gl.NO_ERROR) {
+        console.warn("WebGL error before texture upload:", error);
+      }
+      
       gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, screenshotCanvas);
+      
+      error = gl.getError();
+      if (error !== gl.NO_ERROR) {
+        console.warn("WebGL error after texture upload:", error);
+      }
 
+      // 使用安全的纹理过滤
       gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
       gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
       gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
       gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
     } catch (error) {
       console.error("截图失败:", error);
+      setWebglWorking(false);
     }
   }, []);
 
-  const debouncedUpdateScreenshot = useCallback(debounce(updateScreenshot, 1), [updateScreenshot, debounce]);
+  const debouncedUpdateScreenshot = useCallback(debounce(updateScreenshot, 100), [updateScreenshot, debounce]);
 
   // 渲染函数
   const render = useCallback(() => {
@@ -329,13 +365,23 @@ const GlassCard: React.FC<GlassProps> = ({
     const gl = glRef.current;
     const program = programRef.current;
     const rect = containerRef.current.getBoundingClientRect();
-    const width = rect.width;
-    const height = rect.height;
+    const devicePixelRatio = window.devicePixelRatio || 1;
+    
+    // 使用设备像素比设置实际Canvas尺寸
+    const displayWidth = rect.width;
+    const displayHeight = rect.height;
+    const canvasWidth = displayWidth * devicePixelRatio;
+    const canvasHeight = displayHeight * devicePixelRatio;
 
-    canvas.width = width;
-    canvas.height = height;
+    // 设置Canvas的实际像素尺寸
+    canvas.width = canvasWidth;
+    canvas.height = canvasHeight;
+    
+    // 设置Canvas的显示尺寸
+    canvas.style.width = displayWidth + 'px';
+    canvas.style.height = displayHeight + 'px';
 
-    gl.viewport(0, 0, canvas.width, canvas.height);
+    gl.viewport(0, 0, canvasWidth, canvasHeight);
     gl.clearColor(0.0, 0.0, 0.0, 0.0);
     gl.clear(gl.COLOR_BUFFER_BIT);
 
@@ -361,9 +407,9 @@ const GlassCard: React.FC<GlassProps> = ({
     const overlayColorUniformLocation = gl.getUniformLocation(program, "u_overlayColor");
     const highlightWidthUniformLocation = gl.getUniformLocation(program, "u_highlightWidth");
 
-    gl.uniform2f(resolutionUniformLocation, width, height);
-    gl.uniform2f(mousePosUniformLocation, width / 2, height / 2);
-    gl.uniform2f(glassSizeUniformLocation, width, height);
+    gl.uniform2f(resolutionUniformLocation, displayWidth, displayHeight);
+    gl.uniform2f(mousePosUniformLocation, displayWidth / 2, displayHeight / 2);
+    gl.uniform2f(glassSizeUniformLocation, displayWidth, displayHeight);
     gl.uniform1f(cornerRadiusUniformLocation, borderRadius);
     gl.uniform1f(iorUniformLocation, ior);
     gl.uniform1f(glassThicknessUniformLocation, glassThickness);
@@ -390,10 +436,17 @@ const GlassCard: React.FC<GlassProps> = ({
     if (!enableWebGL || !canvasRef.current) return;
 
     const canvas = canvasRef.current;
-    const gl = canvas.getContext("webgl");
+    // 启用抗锯齿
+    const gl = canvas.getContext("webgl", { 
+      antialias: true,
+      alpha: true,
+      premultipliedAlpha: false,
+      preserveDrawingBuffer: false
+    });
     
     if (!gl) {
       console.warn("WebGL not supported, falling back to CSS effects");
+      setWebglWorking(false);
       return;
     }
 
@@ -500,8 +553,8 @@ const GlassCard: React.FC<GlassProps> = ({
     ...glassStyle,
     ...style,
     position: 'relative' as const,
-    // 如果不启用 WebGL，则使用传统的 CSS 效果
-    ...(!enableWebGL && {
+    // 如果不启用 WebGL 或 WebGL 不工作，则使用传统的 CSS 效果
+    ...(!enableWebGL || !webglWorking) && {
       backdropFilter: `blur(${blur}px) saturate(180%)`,
       WebkitBackdropFilter: `blur(${blur}px) saturate(180%)`,
       background: 'rgba(255, 255, 255, 0.1)',
@@ -510,7 +563,7 @@ const GlassCard: React.FC<GlassProps> = ({
       boxShadow: shadow 
         ? '0 8px 32px 0 rgba(31, 38, 135, 0.37), inset 0 1px 0 rgba(255, 255, 255, 0.3)' 
         : 'none',
-    })
+    }
   };
 
   return (
@@ -520,7 +573,7 @@ const GlassCard: React.FC<GlassProps> = ({
       style={combinedStyle}
       {...props}
     >
-      {enableWebGL && (
+      {enableWebGL && webglWorking && (
         <>
           <canvas
             ref={canvasRef}
