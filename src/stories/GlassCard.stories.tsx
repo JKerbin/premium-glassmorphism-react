@@ -7,91 +7,10 @@ const poetryText = `In shadows deep where silence dwells
 The moonlight dances on the hills
 Through whispered winds and ancient trees
 Time flows like rivers to the seas
-
 Stars paint stories in the night
 Dreams take wing in silver flight
 Morning dew on petals bright
-Nature's canvas, pure delight
-
-Gentle waves kiss sandy shores
-Love opens all forgotten doors
-Hearts that beat in rhythm true
-Find their peace in morning dew
-
-Clouds drift by on summer days
-Through the golden sunset's rays
-Birds sing songs of joy and grace
-In this quiet, sacred space
-
-Flowers bloom in colors bold
-Stories waiting to be told
-Life unfolds in moments small
-Beauty lives within us all
-
-Seasons change with gentle care
-Magic floats upon the air
-Hope springs forth from winter's end
-New beginnings round each bend
-
-In shadows deep where silence dwells
-The moonlight dances on the hills
-Through whispered winds and ancient trees
-Time flows like rivers to the seas
-
-Stars paint stories in the night
-Dreams take wing in silver flight
-Morning dew on petals bright
-Nature's canvas, pure delight
-
-Gentle waves kiss sandy shores
-Love opens all forgotten doors
-Hearts that beat in rhythm true
-Find their peace in morning dew
-
-Clouds drift by on summer days
-Through the golden sunset's rays
-Birds sing songs of joy and grace
-In this quiet, sacred space
-
-Flowers bloom in colors bold
-Stories waiting to be told
-Life unfolds in moments small
-Beauty lives within us all
-
-Seasons change with gentle care
-Magic floats upon the air
-Hope springs forth from winter's end
-New beginnings round each bend
-
-In shadows deep where silence dwells
-The moonlight dances on the hills
-Through whispered winds and ancient trees
-Time flows like rivers to the seas
-
-Stars paint stories in the night
-Dreams take wing in silver flight
-Morning dew on petals bright
-Nature's canvas, pure delight
-
-Gentle waves kiss sandy shores
-Love opens all forgotten doors
-Hearts that beat in rhythm true
-Find their peace in morning dew
-
-Clouds drift by on summer days
-Through the golden sunset's rays
-Birds sing songs of joy and grace
-In this quiet, sacred space
-
-Flowers bloom in colors bold
-Stories waiting to be told
-Life unfolds in moments small
-Beauty lives within us all
-
-Seasons change with gentle care
-Magic floats upon the air
-Hope springs forth from winter's end
-New beginnings round each bend`;
+Nature's canvas, pure delight`;
 
 // Global variable to store random image ID, avoiding repeated loading
 let globalRandomImageId: number | null = null;
@@ -121,7 +40,7 @@ const BackgroundDecorator = (Story: any) => {
       style={{
         position: "relative",
         width: "100%",
-        height: "100vh",
+        height: "auto", // 改为 auto，让内容撑开高度
         overflow: "hidden", // Hide container scrollbars
       }}
     >
@@ -145,20 +64,16 @@ const BackgroundDecorator = (Story: any) => {
       {/* Scrollable poetry content */}
       <div
         style={{
-          position: "absolute",
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
+          position: "relative", // 改为 relative，让它参与文档流
           padding: "60px 40px",
-          fontSize: "18px",
+          fontSize: "22px",
           lineHeight: "1.8",
           color: "rgba(255, 255, 255, 0.9)",
           textShadow: "0 2px 4px rgba(0,0,0,0.7)",
           fontFamily: "Georgia, serif",
           textAlign: "center",
           whiteSpace: "pre-line", // Preserve line break formatting
-          overflow: "auto", // Only content area can scroll
+          // 移除 overflow: "auto"，让内容自然撑开
         }}
       >
         <div
