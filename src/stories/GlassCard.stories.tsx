@@ -202,6 +202,33 @@ const meta: Meta<typeof GlassCard> = {
     borderRadius: {
       control: { type: "range", min: 0, max: 50, step: 1 },
     },
+    enableWebGL: {
+      control: { type: "boolean" },
+    },
+    ior: {
+      control: { type: "range", min: 1.0, max: 2.0, step: 0.1 },
+    },
+    glassThickness: {
+      control: { type: "range", min: 10, max: 100, step: 1 },
+    },
+    normalStrength: {
+      control: { type: "range", min: 0, max: 20, step: 0.1 },
+    },
+    displacementScale: {
+      control: { type: "range", min: 0, max: 3, step: 0.1 },
+    },
+    heightBlurFactor: {
+      control: { type: "range", min: 1, max: 20, step: 0.1 },
+    },
+    sminSmoothing: {
+      control: { type: "range", min: 0, max: 50, step: 1 },
+    },
+    highlightWidth: {
+      control: { type: "range", min: 0, max: 10, step: 0.1 },
+    },
+    showNormals: {
+      control: { type: "boolean" },
+    },
   },
 };
 
