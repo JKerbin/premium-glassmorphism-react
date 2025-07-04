@@ -8,15 +8,15 @@ const GlassCard: React.FC<GlassProps> = ({
   className = "",
   style = {},
   blur = 0,
-  borderRadius = 12,
+  borderRadius = 100,
   border = true,
-  shadow = false,
+  shadow = true,
   // WebGL 参数
   ior = 1.1,
-  glassThickness = 41,
+  glassThickness = 15,
   normalStrength = 6.4,
   displacementScale = 1.0,
-  heightBlurFactor = 10.0,
+  heightBlurFactor = 5.0,
   sminSmoothing = 20.0,
   highlightWidth = 3.5,
   showNormals = false,
@@ -230,19 +230,6 @@ const GlassCard: React.FC<GlassProps> = ({
     return shader;
   }, []);
 
-  // 防抖函数
-  const debounce = useCallback((func: Function, wait: number) => {
-    let timeout: NodeJS.Timeout;
-    return function executedFunction(...args: any[]) {
-      const later = () => {
-        clearTimeout(timeout);
-        func(...args);
-      };
-      clearTimeout(timeout);
-      timeout = setTimeout(later, wait);
-    };
-  }, []);
-
   // 截图更新函数
   const updateScreenshot = useCallback(async () => {
     if (!containerRef.current || !screenshotCanvasRef.current || !glRef.current || !backgroundTextureRef.current) {
@@ -252,13 +239,11 @@ const GlassCard: React.FC<GlassProps> = ({
     try {
       const rect = containerRef.current.getBoundingClientRect();
       const devicePixelRatio = window.devicePixelRatio || 1;
-      
       // 计算页面绝对坐标（包含滚动偏移）
       const scrollX = window.pageXOffset || document.documentElement.scrollLeft;
       const scrollY = window.pageYOffset || document.documentElement.scrollTop;
       const absoluteLeft = rect.left + scrollX;
       const absoluteTop = rect.top + scrollY;
-      
       // 获取完整页面的尺寸
       const fullWidth = Math.max(
         document.body.scrollWidth,
@@ -274,7 +259,6 @@ const GlassCard: React.FC<GlassProps> = ({
         document.documentElement.scrollHeight,
         document.documentElement.offsetHeight
       );
-
       // 提高截图质量，使用适中的缩放比例
       const fullPageCanvas = await html2canvas(document.body, {
         useCORS: true,
@@ -289,30 +273,21 @@ const GlassCard: React.FC<GlassProps> = ({
         imageTimeout: 0,
         logging: false,
       });
-
       const screenshotCanvas = screenshotCanvasRef.current;
       // 使用设备像素比设置Canvas尺寸
       const canvasWidth = rect.width * devicePixelRatio;
       const canvasHeight = rect.height * devicePixelRatio;
-      
       screenshotCanvas.width = canvasWidth;
       screenshotCanvas.height = canvasHeight;
-
       const ctx = screenshotCanvas.getContext("2d");
       if (!ctx) return;
-
-      // 启用图像平滑以减少锯齿
       ctx.imageSmoothingEnabled = true;
       ctx.imageSmoothingQuality = 'high';
-
-      // 计算源区域的缩放
       const sourceScale = devicePixelRatio;
       const sourceLeft = absoluteLeft * sourceScale;
       const sourceTop = absoluteTop * sourceScale;
       const sourceWidth = rect.width * sourceScale;
       const sourceHeight = rect.height * sourceScale;
-
-      // 使用绝对坐标进行截图，考虑缩放
       ctx.drawImage(
         fullPageCanvas,
         sourceLeft,
@@ -324,36 +299,50 @@ const GlassCard: React.FC<GlassProps> = ({
         canvasWidth,
         canvasHeight
       );
-
       const gl = glRef.current;
       gl.bindTexture(gl.TEXTURE_2D, backgroundTextureRef.current);
       gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
-      
-      // 检查WebGL错误
       let error = gl.getError();
       if (error !== gl.NO_ERROR) {
         console.warn("WebGL error before texture upload:", error);
       }
-      
       gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, screenshotCanvas);
-      
       error = gl.getError();
       if (error !== gl.NO_ERROR) {
         console.warn("WebGL error after texture upload:", error);
       }
-
-      // 使用安全的纹理过滤
       gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
       gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
       gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
       gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+      console.log('updateScreenshot');
     } catch (error) {
       console.error("截图失败:", error);
       setWebglWorking(false);
     }
   }, []);
 
-  const debouncedUpdateScreenshot = useCallback(debounce(updateScreenshot, 100), [updateScreenshot, debounce]);
+  // 只在挂载和依赖变化时截图
+  useEffect(() => {
+    if (!enableWebGL) return;
+    updateScreenshot();
+  }, [
+    enableWebGL,
+    blur,
+    borderRadius,
+    border,
+    shadow,
+    ior,
+    glassThickness,
+    normalStrength,
+    displacementScale,
+    heightBlurFactor,
+    sminSmoothing,
+    highlightWidth,
+    showNormals,
+    overlayColor,
+    updateScreenshot
+  ]);
 
   // 渲染函数
   const render = useCallback(() => {
@@ -507,47 +496,12 @@ const GlassCard: React.FC<GlassProps> = ({
       updateScreenshot();
     }, 100);
 
-    // 监听变化
-    const mutationObserver = new MutationObserver((mutations) => {
-      const hasSignificantChange = mutations.some(mutation => {
-        if (mutation.target === containerRef.current) return false;
-        if (containerRef.current?.contains(mutation.target as Node)) return false;
-        return mutation.type === 'childList' || 
-               (mutation.type === 'attributes' && 
-                ['style', 'class', 'src'].includes(mutation.attributeName || ''));
-      });
-      
-      if (hasSignificantChange) {
-        debouncedUpdateScreenshot();
-      }
-    });
-
-    mutationObserver.observe(document.body, {
-      childList: true,
-      subtree: true,
-      attributes: true,
-      attributeFilter: ['style', 'class', 'src']
-    });
-
-    const resizeObserver = new ResizeObserver(() => {
-      debouncedUpdateScreenshot();
-    });
-
-    resizeObserver.observe(document.body);
-
-    window.addEventListener('resize', debouncedUpdateScreenshot);
-    window.addEventListener('scroll', debouncedUpdateScreenshot, { passive: true });
-
     return () => {
       if (animationFrameRef.current) {
         cancelAnimationFrame(animationFrameRef.current);
       }
-      mutationObserver.disconnect();
-      resizeObserver.disconnect();
-      window.removeEventListener('resize', debouncedUpdateScreenshot);
-      window.removeEventListener('scroll', debouncedUpdateScreenshot);
     };
-  }, [enableWebGL, createShader, render, updateScreenshot, debouncedUpdateScreenshot]);
+  }, [enableWebGL, createShader, render, updateScreenshot]);
 
   const combinedStyle = {
     ...glassStyle,

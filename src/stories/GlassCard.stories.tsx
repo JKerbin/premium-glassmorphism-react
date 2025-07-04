@@ -3,87 +3,57 @@ import { useState, useEffect } from "react";
 import GlassCard from "../components/GlassCard";
 
 // Fixed poetry content
-const poetryText = `In shadows deep where silence dwells
-The moonlight dances on the hills
-Through whispered winds and ancient trees
-Time flows like rivers to the seas
-Stars paint stories in the night
-Dreams take wing in silver flight
-Morning dew on petals bright
-Nature's canvas, pure delight`;
+const poetryText = `From fairest creatures we desire increase
+That thereby beauty's rose might never die
+But as the riper should by time decease
+His tender heir might bear his memory
+But thou contracted to thine own bright eyes
+Feed'st thy light's flame with self-substantial fuel
+Making a famine where abundance lies
+Thy self thy foe, to thy sweet self too cruel
+Thou that art now the world's fresh ornament
+And only herald to the gaudy spring
+Within thine own bud buriest thy content
+And tender churl mak'st waste in niggarding
+Pity the world, or else this glutton be
+To eat the world's due, by the grave and thee`;
 
 // Global variable to store random image ID, avoiding repeated loading
 let globalRandomImageId: number | null = null;
 
 // Background decorator
 const BackgroundDecorator = (Story: any) => {
-  const [imageLoaded, setImageLoaded] = useState(false);
-
-  // Generate random ID only on first load
-  if (globalRandomImageId === null) {
-    globalRandomImageId = Math.floor(Math.random() * 1000);
-  }
-
-  const imageUrl = `https://picsum.photos/seed/${globalRandomImageId}/1600/900`;
-
-  // Preload image
-  useEffect(() => {
-    const img = new Image();
-    img.onload = () => {
-      setImageLoaded(true);
-    };
-    img.src = imageUrl;
-  }, [imageUrl]);
-
   return (
     <div
       style={{
         position: "relative",
         width: "100%",
-        height: "auto", // 改为 auto，让内容撑开高度
-        overflow: "hidden", // Hide container scrollbars
+        height: "100vh",
+        background: "#f1f1f1",
+        backgroundImage: `linear-gradient(90deg, transparent 50px, #ffb4b8 50px, #ffb4b8 52px, transparent 52px), linear-gradient(#e1e1e1 0.1em, transparent 0.1em)`,
+        backgroundSize: "100% 30px",
+        overflow: "hidden",
       }}
     >
-      {/* Background image layer */}
-      <div
-        style={{
-          position: "absolute",
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          background: `linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url(${imageUrl})`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          backgroundRepeat: "no-repeat",
-          opacity: imageLoaded ? 1 : 0,
-          transition: "opacity 1s ease-in-out",
-        }}
-      />
-
       {/* Scrollable poetry content */}
       <div
         style={{
-          position: "relative", // 改为 relative，让它参与文档流
-          padding: "60px 40px",
-          fontSize: "22px",
+          position: "relative",
+          fontSize: "27px",
           lineHeight: "1.8",
-          color: "rgba(255, 255, 255, 0.9)",
-          textShadow: "0 2px 4px rgba(0,0,0,0.7)",
+          color: "black",
           fontFamily: "Georgia, serif",
           textAlign: "center",
-          whiteSpace: "pre-line", // Preserve line break formatting
-          // 移除 overflow: "auto"，让内容自然撑开
+          whiteSpace: "pre-line",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100%",
+          minHeight: "400px",
         }}
       >
-        <div
-          style={{
-            maxWidth: "600px",
-            margin: "0 auto 0 auto",
-          }}
-        >
-          {poetryText}
-        </div>
+        <div>{poetryText}</div>
       </div>
 
       {/* Fixed position GlassCard */}
@@ -115,7 +85,7 @@ const meta: Meta<typeof GlassCard> = {
       control: { type: "range", min: 0, max: 50, step: 1 },
     },
     borderRadius: {
-      control: { type: "range", min: 0, max: 50, step: 1 },
+      control: { type: "range", min: 0, max: 100, step: 1 },
     },
     enableWebGL: {
       control: { type: "boolean" },
@@ -150,11 +120,8 @@ const meta: Meta<typeof GlassCard> = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Default: Story = {
+export const Demo: Story = {
   args: {
-    children: (
-      <div style={{ padding: "70px 200px" }}>
-      </div>
-    ),
+    children: <div style={{ padding: "135px 200px" }}></div>,
   },
 };
