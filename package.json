@@ -1,6 +1,6 @@
 {
   "name": "react-premium-glass",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "A premium glassmorphism React GlassCard component",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
