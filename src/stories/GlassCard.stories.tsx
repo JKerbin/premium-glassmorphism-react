@@ -1,14 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { useState, useEffect } from "react";
 import GlassCard from "../components/GlassCard";
 import bgImg from "./128-1600x900.jpg";
 
 // Fixed poetry content
 const poetryText = `Lorem
 Ipsum`;
-
-// Global variable to store random image ID, avoiding repeated loading
-let globalRandomImageId: number | null = null;
 
 // Background decorator
 const BackgroundDecorator = (Story: any) => {

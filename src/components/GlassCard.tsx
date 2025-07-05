@@ -1,7 +1,7 @@
 import React, { useRef } from "react";
 import { GlassProps } from "../types/glass.types";
-import { useGlassEffect } from "../hooks/useGlassEffect";
-import { useWebGLGlass } from "../hooks/useWebGLGlass";
+import { useCssEffect } from "../hooks/useCssEffect";
+import { useWebGLEffect } from "../hooks/useWebGLEffect";
 
 const GlassCard: React.FC<GlassProps> = ({
   children,
@@ -13,8 +13,7 @@ const GlassCard: React.FC<GlassProps> = ({
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
 
-  const { glassClasses, glassStyle } = useGlassEffect({
-    blur: 0,
+  const { glassClasses, glassStyle } = useCssEffect({
     borderRadius,
   });
 
@@ -24,7 +23,7 @@ const GlassCard: React.FC<GlassProps> = ({
     enableWebGL,
   };
 
-  const { canvasRef, screenshotCanvasRef, webglWorking } = useWebGLGlass(
+  const { canvasRef, screenshotCanvasRef, webglWorking } = useWebGLEffect(
     containerRef,
     webGLConfig
   );
