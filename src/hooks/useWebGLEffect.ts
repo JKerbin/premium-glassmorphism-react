@@ -18,7 +18,6 @@ export const useWebGLEffect = (
   const glRef = useRef<WebGLRenderingContext | null>(null);
   const backgroundTextureRef = useRef<WebGLTexture | null>(null);
   const [webglWorking, setWebglWorking] = useState(true);
-  console.log(style);
   // Create shader
   const createShader = useCallback(
     (gl: WebGLRenderingContext, type: number, source: string) => {

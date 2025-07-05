@@ -17,8 +17,6 @@ const GlassCard: React.FC<GlassProps> = ({
     enableShadowBox,
   });
 
-  console.log(style);
-
   const { canvasRef, screenshotCanvasRef, webglWorking } = useWebGLEffect(
     containerRef,
     enableWebGL,
