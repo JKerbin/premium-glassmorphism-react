@@ -68,5 +68,8 @@
     "sass": "^1.89.2",
     "storybook": "^7.5.0",
     "typescript": "^5.2.2"
+  },
+  "dependencies": {
+    "html2canvas": "^1.4.1"
   }
 }
