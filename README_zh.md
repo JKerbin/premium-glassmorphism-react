@@ -106,7 +106,7 @@ MIT License
 
 ## 更新日志
 
-### 1.0.0
+### 0.0.1-alpha
 
 - 初始版本发布
 - 包含 GlassCard 组件
