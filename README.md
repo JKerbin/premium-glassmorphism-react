@@ -4,6 +4,8 @@
 
 A high-quality React glassmorphism GlassCard component
 
+![image](https://github.com/user-attachments/assets/c7e3d47b-d68c-426f-b299-2980cdadf38f)
+
 ## Features
 
 - 🎨 **Modern Design** - Based on the latest glassmorphism design trends
