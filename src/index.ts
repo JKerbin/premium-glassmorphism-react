@@ -5,4 +5,4 @@ export { default as GlassCard } from "./components/GlassCard";
 export type { GlassProps } from "./types/glass.types";
 
 // Styles
-import "./styles/glass.scss";
+import "./assets/glass.scss";

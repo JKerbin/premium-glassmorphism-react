@@ -1,23 +1,17 @@
 import { useMemo } from "react";
 
 export interface UseGlassEffectOptions {
-  borderRadius?: number;
+  enableShadowBox?: boolean;
 }
 
 export const useCssEffect = (options: UseGlassEffectOptions = {}) => {
-  const {
-    borderRadius = 12,
-  } = options;
+  const { enableShadowBox } = options;
 
   const glassClasses = useMemo(() => {
-    return "glass-card";
-  }, []);
+    const className = ["glass-card"];
+    if(enableShadowBox)className.push("glass-card-shadow");
+    return className.join(" ");
+  }, [enableShadowBox]);
 
-  const glassStyle = useMemo(() => {
-    return {
-      "--glass-border-radius": `${borderRadius}px`,
-    };
-  }, [borderRadius]);
-
-  return { glassClasses, glassStyle };
+  return { glassClasses };
 };

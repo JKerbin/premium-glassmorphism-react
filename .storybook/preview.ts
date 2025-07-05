@@ -1,5 +1,8 @@
 import type { Preview } from "@storybook/react";
-import "../src/styles/glass.scss";
+import "../src/assets/glass.scss";
+
+// @ts-ignore
+import bgImg from "./128-1600x700.jpg";
 
 const preview: Preview = {
   parameters: {
@@ -11,20 +14,15 @@ const preview: Preview = {
       },
     },
     backgrounds: {
-      default: "gradient",
+      default: "photo",
       values: [
         {
-          name: "gradient",
-          value:
-            "radial-gradient(circle at 60% 60%, white 0%, #eee 30%, #aaa 100%)",
+          name: "photo",
+          value: `url(${bgImg})`,
         },
         {
-          name: "dark",
-          value: "#1a1a1a",
-        },
-        {
-          name: "light",
-          value: "#f0f0f0",
+          name: "pure",
+          value: "#212121",
         },
       ],
     },

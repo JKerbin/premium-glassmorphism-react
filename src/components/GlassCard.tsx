@@ -7,31 +7,26 @@ const GlassCard: React.FC<GlassProps> = ({
   children,
   className = "",
   style = {},
-  borderRadius = 100,
+  enableShadowBox = true,
   enableWebGL = true,
   ...props
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
 
-  const { glassClasses, glassStyle } = useCssEffect({
-    borderRadius,
+  const { glassClasses } = useCssEffect({
+    enableShadowBox,
   });
 
-  const webGLConfig = {
-    blur: 0,
-    borderRadius,
-    enableWebGL,
-  };
+  console.log(style);
 
   const { canvasRef, screenshotCanvasRef, webglWorking } = useWebGLEffect(
     containerRef,
-    webGLConfig
+    enableWebGL,
+    style,
   );
 
   const combinedStyle = {
-    ...glassStyle,
     ...style,
-    position: "relative" as const,
   };
 
   return (
@@ -53,7 +48,7 @@ const GlassCard: React.FC<GlassProps> = ({
               height: "100%",
               pointerEvents: "none",
               zIndex: 1,
-              borderRadius: `${borderRadius}px`,
+              borderRadius: `${style.borderRadius ?? "0"}px`,
             }}
           />
           <canvas ref={screenshotCanvasRef} style={{ display: "none" }} />

@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import GlassCard from "../components/GlassCard";
-import bgImg from "./128-1600x900.jpg";
 
 // Fixed poetry content
 const poetryText = `Lorem
@@ -12,13 +11,6 @@ const BackgroundDecorator = (Story: any) => {
     <div
       style={{
         position: "relative",
-        width: "100%",
-        height: "100vh",
-        backgroundImage: `url(${bgImg})`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        backgroundRepeat: "no-repeat",
-        overflow: "hidden",
       }}
     >
       {/* Scrollable poetry content */}
@@ -61,18 +53,20 @@ const BackgroundDecorator = (Story: any) => {
 const meta: Meta<typeof GlassCard> = {
   title: "Components/GlassCard",
   component: GlassCard,
-  parameters: {
-    layout: "fullscreen", // Change to fullscreen layout
-  },
   decorators: [BackgroundDecorator], // Add background decorator
   tags: ["autodocs"],
   argTypes: {
-    borderRadius: {
-      control: { type: "range", min: 0, max: 100, step: 1 },
+    style: {
+      control: "object",
     },
     enableWebGL: {
       control: { type: "boolean" },
-    }
+    },
+  },
+  args: {
+    style: {
+      borderRadius: "100px",
+    },
   },
 };
 

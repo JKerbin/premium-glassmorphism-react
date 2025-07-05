@@ -1,8 +1,0 @@
-// Glass effect base styles
-.glass-card {
-  border-radius: var(--glass-border-radius, 12px);
-  position: relative;
-  overflow: hidden;
-  box-shadow: 0 8px 32px 0 #000000aa;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-}
