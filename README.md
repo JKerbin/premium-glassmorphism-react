@@ -1,23 +1,24 @@
 # React Premium Glass
 
-一个高质量的 React 玻璃态效果 GlassCard 组件，提供现代化的毛玻璃（Glassmorphism）UI 效果。
+[English](README.md) | [中文](README_zh.md)
 
-## 特性
+A high-quality React glassmorphism GlassCard component
 
-- 🎨 **现代设计** - 基于最新的玻璃态设计趋势
-- 🔧 **TypeScript 支持** - 完整的类型定义
-- 📱 **响应式设计** - 适配各种屏幕尺寸
-- 🎯 **易于使用** - 简洁的 API 设计
-- 🧪 **完整测试** - 单元测试覆盖
-- 📚 **Storybook 文档** - 交互式组件文档
+## Features
 
-## 安装
+- 🎨 **Modern Design** - Based on the latest glassmorphism design trends
+- 🔧 **TypeScript Support** - Complete type definitions
+- 📱 **Responsive Design** - Adapts to various screen sizes
+- 🎯 **Easy to Use** - Clean API design
+- 📚 **Storybook Documentation** - Interactive component documentation
+
+## Installation
 
 ```bash
 npm install react-premium-glass
 ```
 
-## 快速开始
+## Quick Start
 
 ```tsx
 import { GlassCard } from "react-premium-glass";
@@ -26,90 +27,86 @@ function App() {
   return (
     <div
       style={{
-        background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
-        minHeight: "100vh",
-        padding: "20px",
+        background: "#212121",
       }}
     >
-      <GlassCard blur={10}>
-        <h2>欢迎使用 React Premium Glass</h2>
-        <p>这是一个美丽的玻璃态卡片组件</p>
+      <GlassCard
+        enableWebGL={true}
+        style={{
+          borderRadius: "100px",
+          color: "white"
+        }}
+      >
+        <h2>Welcome to React Premium Glass</h2>
+        <p>This is a beautiful glassmorphism card component</p>
       </GlassCard>
     </div>
   );
 }
 ```
 
-## 组件
+## Components
 
 ### GlassCard
 
-基础的玻璃态卡片组件，支持多种变体和自定义选项。
-
 ```tsx
 <GlassCard
-  blur={10}
-  borderRadius={12}
-  border={true}
-  shadow={true}
+  enableWebGL={true}
 >
-  <p>卡片内容</p>
+  <p>Card content</p>
 </GlassCard>
 ```
 
-## API 参考
+## API Reference
 
-### GlassCard 属性
+### GlassCard Props
 
-| 属性         | 类型            | 默认值 | 描述            |
-| ------------ | --------------- | ------ | --------------- |
-| blur         | `number`        | `10`   | 模糊程度 (px)   |
-| borderRadius | `number`        | `12`   | 圆角大小 (px)   |
-| border       | `boolean`       | `true` | 是否显示边框    |
-| shadow       | `boolean`       | `true` | 是否显示阴影    |
-| className    | `string`        | -      | 自定义 CSS 类名 |
-| style        | `CSSProperties` | -      | 自定义样式      |
-| children     | `ReactNode`                                    | -         | 子元素内容      |
+| Prop         | Type             | Default | Description           |
+| ------------ | --------------- | ------- | -------------------- |
+| enableWebGL  | `boolean`       | `true`  | Enable WebGL refraction effect |
+| className    | `string`        | -       | Custom CSS class name |
+| style        | `CSSProperties` | -       | Custom styles         |
+| children     | `ReactNode`     | -       | Child elements        |
 
-## 开发
+## Development
 
 ```bash
-# 安装依赖
+# Install dependencies
 npm install
 
-# 启动 Storybook 开发服务器
+# Start Storybook development server
 npm run dev
 
-# 构建组件库
+# Build component library
 npm run build
 
-# 代码检查
+# Code linting
 npm run lint
 ```
 
-## 构建和发布
+## Build and Publish
 
 ```bash
-# 构建
+# Build
 npm run build
 
-# 发布到 npm
+# Publish to npm
 npm publish
 ```
 
-## 许可证
+## License
 
 MIT License
 
-## 贡献
+## Contributing
 
-欢迎提交 Issue 和 Pull Request！
+Issues and Pull Requests are welcome!
 
-## 更新日志
+## Changelog
 
 ### 1.0.0
 
-- 初始版本发布
-- 包含 GlassCard 组件
-- 完整的 TypeScript 支持
-- Storybook 文档
+- Initial release
+- Includes GlassCard component
+- Complete TypeScript support
+- Storybook documentation
