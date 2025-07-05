@@ -4,6 +4,8 @@
 
 一个高质量的 React 玻璃态效果 GlassCard 组件
 
+![image](https://github.com/user-attachments/assets/c7e3d47b-d68c-426f-b299-2980cdadf38f)
+
 ## 特性
 
 - 🎨 **现代设计** - 基于最新的玻璃态设计趋势
