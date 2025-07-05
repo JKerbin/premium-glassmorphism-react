@@ -36,13 +36,13 @@ export const fsSource = `
   varying vec2 v_shapeCoord;
 
   // Fixed WebGL parameters
-  const float u_ior = 1.1;
-  const float u_glassThickness = 15.0;
-  const float u_normalStrength = 6.4;
-  const float u_displacementScale = 1.0;
-  const float u_heightTransitionWidth = 5.0;
+  const float u_ior = 1.0;
+  const float u_glassThickness = 200.0;
+  const float u_normalStrength = 5.0;
+  const float u_displacementScale = 10.0;
+  const float u_heightTransitionWidth = 10.0;
   const float u_sminSmoothing = 20.0;
-  const float u_highlightWidth = 3.5;
+  const float u_highlightWidth = 5.0;
   const int u_showNormals = 0;
   const vec4 u_overlayColor = vec4(1.0, 1.0, 1.0, 1.0);
 

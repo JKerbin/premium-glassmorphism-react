@@ -1,5 +1,4 @@
 import type { Preview } from "@storybook/react";
-import "../src/assets/glass.scss";
 
 // @ts-ignore
 import bgImg from "./128-1600x700.jpg";

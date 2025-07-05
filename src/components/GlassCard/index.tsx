@@ -1,37 +1,29 @@
-import React, { useRef } from "react";
-import { GlassProps } from "../types/glass.types";
-import { useCssEffect } from "../hooks/useCssEffect";
-import { useWebGLEffect } from "../hooks/useWebGLEffect";
+import React, { useEffect, useRef, useState } from "react";
+import { GlassProps } from "../../types/glass.types";
+import { useWebGLEffect } from "../../hooks/useWebGLEffect";
+import "./index.scss";
 
 const GlassCard: React.FC<GlassProps> = ({
   children,
   className = "",
   style = {},
-  enableShadowBox = true,
   enableWebGL = true,
   ...props
 }) => {
+  const glassClasses = "glass-card";
   const containerRef = useRef<HTMLDivElement>(null);
-
-  const { glassClasses } = useCssEffect({
-    enableShadowBox,
-  });
 
   const { canvasRef, screenshotCanvasRef, webglWorking } = useWebGLEffect(
     containerRef,
     enableWebGL,
-    style,
+    style
   );
-
-  const combinedStyle = {
-    ...style,
-  };
 
   return (
     <div
       ref={containerRef}
       className={`${glassClasses} ${className}`}
-      style={combinedStyle}
+      style={style}
       {...props}
     >
       {enableWebGL && webglWorking && (
