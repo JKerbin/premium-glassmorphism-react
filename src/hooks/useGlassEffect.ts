@@ -3,30 +3,22 @@ import { useMemo } from "react";
 export interface UseGlassEffectOptions {
   blur?: number;
   borderRadius?: number;
-  border?: boolean;
-  shadow?: boolean;
 }
 
 export const useGlassEffect = (options: UseGlassEffectOptions = {}) => {
   const {
     blur = 10,
     borderRadius = 12,
-    border = true,
-    shadow = true,
   } = options;
 
   const glassClasses = useMemo(() => {
     const classes = ["glass-card"];
 
-    // Add border class
-    if (border) {
-      classes.push("glass-border");
-    }
+    // Add border class (fixed to true)
+    classes.push("glass-border");
 
-    // Add shadow class
-    if (shadow) {
-      classes.push("glass-shadow");
-    }
+    // Add shadow class (fixed to true)
+    classes.push("glass-shadow");
 
     // Add blur class based on blur value
     if (blur === 5) classes.push("glass-blur-5");
@@ -41,7 +33,7 @@ export const useGlassEffect = (options: UseGlassEffectOptions = {}) => {
     else classes.push("glass-rounded-md"); // default
 
     return classes.join(" ");
-  }, [blur, borderRadius, border, shadow]);
+  }, [blur, borderRadius]);
 
   const glassStyle = useMemo(() => {
     const style: any = {};
