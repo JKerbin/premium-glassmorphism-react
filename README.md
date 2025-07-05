@@ -106,7 +106,7 @@ Issues and Pull Requests are welcome!
 
 ## Changelog
 
-### 1.0.0
+### 0.0.1-alpha
 
 - Initial release
 - Includes GlassCard component
