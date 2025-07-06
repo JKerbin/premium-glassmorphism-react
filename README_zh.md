@@ -6,6 +6,8 @@
 
 ![image](https://github.com/user-attachments/assets/c7e3d47b-d68c-426f-b299-2980cdadf38f)
 
+>当前版本为尚未完善的测试版本。由于采用html2canvas+WebGL实现，考虑到当前存在的性能问题，目前的组件效果只支持静态一次性渲染。希望体验者和其他开发者能提出解决方案并加入开发
+
 ## 特性
 
 - 🎨 **现代设计** - 基于最新的玻璃态设计趋势

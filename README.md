@@ -6,6 +6,8 @@ A high-quality React glassmorphism GlassCard component
 
 ![image](https://github.com/user-attachments/assets/c7e3d47b-d68c-426f-b299-2980cdadf38f)
 
+>The current version is an incomplete test version. Due to the implementation using html2canvas and WebGL, considering the existing performance issues, the component effect currently only supports static one-time rendering. We hope that users and other developers can propose solutions and join the development.
+
 ## Features
 
 - 🎨 **Modern Design** - Based on the latest glassmorphism design trends
